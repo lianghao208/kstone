@@ -16,11 +16,24 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package providers
+package middlewares
 
 import (
-	// import cos provider
-	_ "tkestack.io/kstone/pkg/backup/providers/cos"
-	// import s3 provider
-	_ "tkestack.io/kstone/pkg/backup/providers/s3"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+
+	"tkestack.io/kstone/pkg/authentication/request"
 )
+
+// Auth authenticates requests
+func Auth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		rsp, ok, err := request.MiddlewareRequest(c)
+		if !ok || err != nil {
+			c.JSON(http.StatusUnauthorized, *rsp)
+			c.Abort()
+		}
+		c.Next()
+	}
+}

@@ -25,7 +25,7 @@ Please refer to [helm installation](https://helm.sh/docs/intro/install/)
 - Download Helm Repo:
 
 ``` shell
-git clone -b release-0.1 git@github.com:tkestack/kstone.git
+git clone -b release-0.2 git@github.com:tkestack/kstone.git
 cd ./charts
 ```
 
@@ -110,10 +110,22 @@ helm install kstone . -n kstone -f values.test.yaml
 
 ### 2.3 Update
 
-``` shell
+- Helm upgrade for production environment
+
+```bash
 cd charts
 
-helm upgrade kstone . -n kstone
+helm upgrade kstone . -n kstone -f values.yaml
+```
+
+or
+
+- Helm upgrade for test environment
+
+```bash
+cd charts
+
+helm upgrade kstone . -n kstone -f values.test.yaml
 ```
 
 ### 2.4 Uninstall
